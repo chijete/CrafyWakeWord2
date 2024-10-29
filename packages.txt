@@ -1,0 +1,14 @@
+Tener instalado FFmpeg en Windows
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia          (https://pytorch.org/)
+pip install librosa transformers datasets pydub onnx onnxruntime onnxmltools onnxconverter_common onnxoptimizer
+pip install transformers[torch]
+
+TODO:
+1. Ejecutar train.py para entrenar el modelo ahora con el dataset ptn.
+2. Probar el modelo con test_model.py
+3. Convertir el modelo a onnx
+4. Cuantizar el modelo y probarlo en JavaScript. Options: -level 0 -model 0
+5. Cuando funcione, revisar cómo ejecutar un modelo
+optimizado y cuantizado opciones: -level 0 -model 1
+Creo que debería ser más rápido por funcionar sobre float16, pero para
+testearlo hay que adaptar la inferencia en test_model_onnx.py y en javascript.

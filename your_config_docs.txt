@@ -1,0 +1,36 @@
+{
+  "wake_word": "almeja", -> Palabra de activación, para la que se va a entrenar el modelo
+  "max_audio_length": 1700, -> Duración máxima del audio de muestra en milisegundos. El audio de muestra es el input de la red para definir si se dice o no la palabra clave.
+  "min_audio_length": 200, -> Duración mínima del audio de muestra en ms.
+  "test_percentage": 0.1, -> Porcentaje del dataset de entrenamiento que pasará a ser dataset de prueba. 0.1 = 10%, 0.5 = 50%, etc. Dataset de entrenamiento = train dataset, Dataset de prueba = test dataset.
+  "positive_negative_fixed_proportion": 1.8, -> Proporción máxima del dataset negativo con respecto al positivo. 1.8 = 180% = el dataset negativo tendrá hasta un 180% de los clips que tiene el dataset positivo. [si se establece en 0 se agregarán todos los audios disponibles en el dataset negativo]
+  "positive_generated_max_proportion_base_positive": 0.7, -> Proporción máxima del dataset positivo generado sinténticamente (con Google Cloud por ejemplo). 0.7 = 70% = se añadirán al dataset positivo un máximo de 70% de clips del total de clips del dataset positivo original, que contiene solo los clips aprobados del dataset positivo no generado sintéticamente. [si se establece en 0 se agregarán todos los audios disponibles en el dataset generado sintéticamente]
+  "positive_generated_min_clip_duration": 810, -> Duración mínima del clip de audio en milisegundos para los clips del dataset de audios positivos generados sinténticamente. [Puede establecerse en 0 para quitar la restricción del mínimo de duración]
+  "positive_to_negative_out_words_proportion": 0.9, -> Proporción máxima del dataset ptn (Positive to negative by not word) con respecto al dataset positivo original (sin sumar el dataset generado sintéticamente). El dataset ptn consiste en clips de audio que contienen una palabra que no es la palabra de activación y la fuente de audios es el dataset positivo, porque tiene corrido el alineamiento (timestamps). 0.9 = 90% = se añadirán al dataset ptn, como máximo, un 90% del total de clips aprobados del dataset positivo. [poner 0 para desativar el dataset ptn]
+  "positive_volume_variations": [80, 100, 130], -> Variaciones de volumen del dataset positivo original. Porcentajes de volumen del clip original. El número de elementos en este arreglo es multiplicador del número de clips en el dataset positivo. El original es [100].
+  "positive_noise_variations": 2, -> Número de variaciones de ruido en el dataset positivo original. Mínimo: 1 (se aplica un solo ruido a cada clip). Un mayor número creará más variaciones de clips que con la misma voz tendrán ruidos de fondo diferentes. Si se desactiva la función de ruido de fondo igual se debe establecer este valor en 1.
+  "volume_normalization": false, -> Normaliza las entradas de audio. Dejar en false: no funcionó y provoca errores activarlo.
+  "volume_randomize": true,
+  "volume_randomize_limits": [-8, 8],
+  "add_noise_in_positive_clips": true, -> Si agregar ruido de fondo al dataset positivo.
+  "noise_in_positive_clips_ends": [5, 25], -> Porcentaje mínimo y máximo de volumen del ruido de fondo para el dataset positivo.
+  "add_noise_in_negative_clips": true, -> Si agregar ruido de fondo al dataset negativo.
+  "noise_in_negative_clips_ends": [5, 25], -> Porcentaje mínimo y máximo de volumen del ruido de fondo para el dataset negativo.
+  "base_model": "jonatasgrosman/wav2vec2-large-xlsr-53-spanish", -> Nombre del modelo wav2vec2 base sobre el que se hará fine-tuning. Se obtiene en HuggingFace.
+  // jonatasgrosman/wav2vec2-large-xlsr-53-spanish
+  // flax-community/wav2vec2-spanish
+  // facebook/wav2vec2-base-10k-voxpopuli-ft-es
+  // facebook/wav2vec2-base-es-voxpopuli-v2
+  // facebook/wav2vec2-large-xlsr-53-spanish
+  // anton-l/distilhubert-ft-keyword-spotting
+  // abhiramk6/distilhubert-ft-keyword-spotting-finetuned-ks-ob
+  // vumichien/trillsson3-ft-keyword-spotting-13
+  // sanchit-gandhi/whisper-tiny-ft-keyword-spotting
+  "model_train_options": { -> Opciones del entrenamiento del modelo. (TrainingArguments)
+    "evaluation_strategy": "epoch", -> Estrategia de evaluación.
+    "save_strategy": "epoch", -> Estrategia de guardado.
+    "per_device_train_batch_size": 4, -> Número de módulos de entrenamiento. Si se usa GPU, equivale al número de GB de VRAM que el modelo usará para entrenarse (aproximadamente). Si la VRAM de la GPU es 4GB, establecer en 4.
+    "per_device_eval_batch_size": 4, -> Igual que per_device_train_batch_size
+    "num_train_epochs": 4 -> Número de épocas de entrenamiento. Un número más alto ajusta más el modelo y uno más bajo lo subajusta. Más épocas es más tiempo que tarda el entrenamiento.
+  }
+}

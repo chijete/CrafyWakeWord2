@@ -25,6 +25,12 @@ This classification model can then be used in real time to detect when the user 
 
 It can also be used to classify pre-recorded audio.
 
+### Demo
+
+You can see an online demo here: [https://crafywakeword2.netlify.app/](https://crafywakeword2.netlify.app/)
+
+Wait until you are prompted for microphone access, and then say “almeja”.
+
 ## Create your own model
 
 With this tool you can create your custom wake word detection model. For example, you can create a model to detect when the user says the word "banana", and then run your own code accordingly.
@@ -280,3 +286,41 @@ That is why the negative dataset must have examples of sounds, words, noises, ph
 ### Base model and processor
 
 Using a better base model on which finetuning will be done and an appropriate processor will also improve the effectiveness and speed of the final model.
+
+### Try different configurations
+
+Finding better recipes for the final model is often a matter of trial and error.
+
+In `CrafyWakeWord2/your_config.json` you can modify settings and retrain the model to achieve better results.
+
+## Continuous wake word detection
+
+With CrafyWakeWord2 you can train a model capable of categorizing an audio input into two categories: the wake word was said (1), and the wake word was not said (0).
+
+But you probably want to constantly listen to the user and trigger some action when they say the wake word.
+
+To achieve this, you must follow this scheme:
+
+1.  Continuously listen to the user's microphone.
+2.  Detect when the user starts to speak (Voice Activity Detection, or VAD).
+3.  Detect when the user finishes speaking.
+4.  Get the audio clip of the user speaking.
+5.  Cut the first segment of the audio, with a maximum duration of `CrafyWakeWord2/your_config.json` > `"max_audio_length"`.
+6.  Use the audio clip to make inference to the trained model. (To make the inference you will have to convert the audio and sample it at 16000 Hz. The most optimal thing is to do it using FFmpeg, since other methods or libraries could give different results than what the model expects, since it was trained with audio converted by FFmpeg.)
+7.  If the model categorizes the audio clip as "wake word said", then act accordingly.
+
+You could also skip steps 2 and 3, that involve using VAD, and continually trim audio clips to make inference with the model, but this option is more expensive in terms of computational resources.
+
+### Javascript example
+
+You can find an example implementation of continuous detection at `web_demo/`, which you can also try online at: [https://crafywakeword2.netlify.app/](https://crafywakeword2.netlify.app/)
+
+This example uses [onnxruntime-web](https://github.com/microsoft/onnxruntime) to run the model, [vad-web](https://github.com/ricky0123/vad) for Voice Activity Detection, and [ffmpeg-wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) for FFmpeg.
+
+1.  Load the model, FFmpeg and activate the VAD.
+2.  Records an audio clip when it detects the user's voice.
+3.  Convert and normalize the audio clip using FFmpeg.
+4.  Perform an inference to the model with the audio clip.
+5.  If the model detects the wake word, it displays a message on the screen.
+
+**Warning of this demo:** The longer you try this demo without reloading the page, the more RAM it will consume, until it causes a memory error. This is a FFmpeg-wasm issue, not CrafyWakeWord2. One way to fix this is to reload the FFmpeg-wasm session every few iterations, but we haven't added that to this page because it's just a demo.

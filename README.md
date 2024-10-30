@@ -1,4 +1,4 @@
-## CrafyWakeWord2
+# CrafyWakeWord2
 
 CrafyWakeWord2 it's a library focused on AI-based wake word recognition.
 
@@ -6,7 +6,7 @@ This is the second version of CrafyWakeWord. You can find the first version here
 
 This second version requires using some files from the first version. More information below.
 
-### ⭐ Features and functions
+## ⭐ Features and functions
 
 *   Custom wake word recognition.
 *   Multiple language support.
@@ -14,7 +14,7 @@ This second version requires using some files from the first version. More infor
 *   Javascript execution supported.
 *   Step by step explanation.
 
-### How it works
+## How it works
 
 This library finetunes a Transformers-based audio vectorization model, training it to classify audio into two categories:
 
@@ -25,23 +25,23 @@ This classification model can then be used in real time to detect when the user 
 
 It can also be used to classify pre-recorded audio.
 
-### Demo
+## Demo
 
 You can see an online demo here: [https://crafywakeword2.netlify.app/](https://crafywakeword2.netlify.app/)
 
 Wait until you are prompted for microphone access, and then say “almeja”.
 
-## Create your own model
+# Create your own model
 
 With this tool you can create your custom wake word detection model. For example, you can create a model to detect when the user says the word "banana", and then run your own code accordingly.
 
-### Prerequisites
+## Prerequisites
 
 *   Have [Python](https://www.python.org/downloads/) 3 installed.
 *   Have [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/) or [Anaconda](https://www.anaconda.com/download#) installed (**optional**).
 *   Have a verified Google Cloud account (we will use the [Google Cloud Text-to-Speech API](https://console.cloud.google.com/apis/library/texttospeech.googleapis.com) to improve the dataset, more information below; the free plan is enough).
 
-### 1\. Download voice dataset
+## 1\. Download voice dataset
 
 The first step is to obtain a dataset of transcribed audios. In this library we will use Mozilla Common Voice to obtain the dataset.
 
@@ -52,7 +52,7 @@ Follow these steps:
 3.  Select the last "Common Voice Corpus" version (Do not select "Delta Segment").
 4.  Enter an email, accept the terms and download the file.
 
-### 2\. Clone repositories
+## 2\. Clone repositories
 
 1.  V1 repository:
     1.  Clone [v1 repository](https://github.com/chijete/CrafyWakeWord) to a folder on your computer using [git](https://git-scm.com/), or download and unzip this repository using Github's "Code > Download ZIP" option.
@@ -62,7 +62,7 @@ Follow these steps:
     1.  Clone this repository to a folder on your computer using [git](https://git-scm.com/), or download and unzip this repository using Github's "Code > Download ZIP" option.
     2.  You should get a folder called `CrafyWakeWord2`.
 
-### 3\. Install dependencies
+## 3\. Install dependencies
 
 Run this commands in your terminal (**optional**: conda activate first or Anaconda terminal):
 
@@ -105,7 +105,7 @@ Run this commands in your terminal (**optional**: conda activate first or Anacon
 
 **When finished, close the terminal and reopen it to apply the changes.**
 
-### 4\. Download aligner model
+## 4\. Download aligner model
 
 We will use [Montreal Forced Aligner](https://montreal-forced-aligner.readthedocs.io/) to align the audio files from the Mozilla Common Voice dataset. Follow these steps:
 
@@ -117,7 +117,7 @@ We will use [Montreal Forced Aligner](https://montreal-forced-aligner.readthedoc
 6.  At the bottom of the page on Github, in the Assets section, click on the dict file (the first one in the list) to download it.
 7.  Copy the two downloaded files to the `CrafyWakeWord/mfa/` folder within the directory where you cloned the repository v1.
 
-### 5\. Edit config file of v1
+## 5\. Edit config file of v1
 
 Edit `CrafyWakeWord/your_config.json` file:
 
@@ -136,7 +136,7 @@ Edit `CrafyWakeWord/your_config.json` file:
     *   `"rate"` Speed ​​range of the voices of the generated audios (start, stop and step for np.arange). start and stop: min 0.25, max 4.0.
     *   `"pitch"` Pitch ​​range of the voices of the generated audios (start, stop and step for np.arange). start and stop: min -20.0, max 20.0.
 
-### 6\. Prepare base dataset
+## 6\. Prepare base dataset
 
 We will use the [CrafyWakeWord v1](https://github.com/chijete/CrafyWakeWord) repository to generate the base dataset.
 
@@ -157,7 +157,7 @@ We will use the [CrafyWakeWord v1](https://github.com/chijete/CrafyWakeWord) rep
     3.  `CrafyWakeWord/dataset/generated/**{wake_word}**/` -> `CrafyWakeWord2/datasets/base/positive_generated/clips/`
     4.  `CrafyWakeWord/dataset/generated/**{wake_word}**.csv` -> `CrafyWakeWord2/datasets/base/positive_generated/dataset.csv` (You must rename the file from "`**{wake_word}**.csv`" to "`dataset.csv`").
 
-### 7\. Edit config file of v2
+## 7\. Edit config file of v2
 
 Edit `CrafyWakeWord2/your_config.json` file:
 
@@ -195,14 +195,14 @@ Edit `CrafyWakeWord2/your_config.json` file:
     *   `"per_device_eval_batch_size"` Number of eval modules. Set the same value as in `"per_device_train_batch_size"`.
     *   `"num_train_epochs"` Number of training epochs. A higher number fits the model more and a lower number underfits it. More epochs is more time the training takes.
 
-### 8\. Prepare final dataset
+## 8\. Prepare final dataset
 
 1.  Open your terminal.
 2.  Navigate to `CrafyWakeWord2/`
 3.  Run `python convert_datasets.py`
 4.  **Optional**: run `python check_dataset.py` (shows final dataset information).
 
-### 9\. Train the model
+## 9\. Train the model
 
 1.  Open your terminal.
 2.  Navigate to `CrafyWakeWord2/`
@@ -211,7 +211,7 @@ Edit `CrafyWakeWord2/your_config.json` file:
 
 The trained model will be saved in: `CrafyWakeWord2/model/model/`
 
-### 10\. Convert model to ONNX
+## 10\. Convert model to ONNX
 
 1.  Open your terminal.
 2.  Navigate to `CrafyWakeWord2/`
@@ -220,11 +220,11 @@ The trained model will be saved in: `CrafyWakeWord2/model/model/`
 
 The converted model will be saved in: `CrafyWakeWord2/model/model.onnx`
 
-### 11\. Model optimization
+## 11\. Model optimization
 
 You can optimize and apply quantization to the model to make it more efficient at the time of inference.
 
-#### Optimization
+### Optimization
 
 It applies optimizations to the ONNX model to improve its inference speed, but does not significantly reduce its size (MB).
 
@@ -234,7 +234,7 @@ You must replace **{onnx\_model\_filename}** with the name of the ONNX format mo
 
 The optimized model will be saved in: `CrafyWakeWord2/model/optimized_**{onnx_model_filename}**`
 
-#### Quantization
+### Quantization
 
 [What is Quantization](https://huggingface.co/docs/optimum/concept_guides/quantization)
 
@@ -246,7 +246,7 @@ You must replace **{onnx\_model\_filename}** with the name of the ONNX format mo
 
 The quanted model will be saved in: `CrafyWakeWord2/model/quant_**{onnx_model_filename}**`
 
-## Custom datasets
+# Custom datasets
 
 To improve model training you can add a custom dataset.
 
@@ -263,13 +263,13 @@ To use the custom dataset, before performing "6. Prepare base dataset", the valu
 
 The clips whose transcripts contain the wake word will be added to the positive dataset, while those that do not contain it will be added to the negative dataset.
 
-## Improving model effectiveness
+# Improving model effectiveness
 
 There are several ways to improve the effectiveness of the model.
 
 They all involve adjusting the settings before training.
 
-### Base dataset quality, diversity and richness
+## Base dataset quality, diversity and richness
 
 As in any deep learning model, it is very important that the examples we use to train it (dataset) are as diverse and of high quality as possible.
 
@@ -283,17 +283,17 @@ And just as it is important to have many examples of what the model should recog
 
 That is why the negative dataset must have examples of sounds, words, noises, phrases, segments of words that are not the wake word.
 
-### Base model and processor
+## Base model and processor
 
 Using a better base model on which finetuning will be done and an appropriate processor will also improve the effectiveness and speed of the final model.
 
-### Try different configurations
+## Try different configurations
 
 Finding better recipes for the final model is often a matter of trial and error.
 
 In `CrafyWakeWord2/your_config.json` you can modify settings and retrain the model to achieve better results.
 
-## Continuous wake word detection
+# Continuous wake word detection
 
 With CrafyWakeWord2 you can train a model capable of categorizing an audio input into two categories: the wake word was said (1), and the wake word was not said (0).
 
@@ -311,7 +311,7 @@ To achieve this, you must follow this scheme:
 
 You could also skip steps 2 and 3, that involve using VAD, and continually trim audio clips to make inference with the model, but this option is more expensive in terms of computational resources.
 
-### Javascript example
+## Javascript example
 
 You can find an example implementation of continuous detection at `web_demo/`, which you can also try online at: [https://crafywakeword2.netlify.app/](https://crafywakeword2.netlify.app/)
 

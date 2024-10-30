@@ -33,7 +33,7 @@ Usar CrafyWakeWord2:
 4. python train.py (entrena el modelo: hace un finetuning del your_config.json > "base_model")
 5. python test_model.py (opcional, prueba el modelo entrenado)
 6. python convert_model_to_onnx.py (convierte el modelo de HuggingFace a ONNX)
-7. python text_model_onnx.py -model {Filename del archivo .onnx a evaluar, que está dentro de model/} (opcional, prueba el modelo entrenado en formato ONNX)
+7. python test_model_onnx.py -model {Filename del archivo .onnx a evaluar, que está dentro de model/} (opcional, prueba el modelo entrenado en formato ONNX)
 8. python optimize_onnx_model.py -model {Filename del archivo .onnx a optimizar, que está dentro de model/} (opcional, optimiza el modelo ONNX)
 9. python quant_onnx_model.py -model {Filename del archivo .onnx a cuantizar, que está dentro de model/} (opcional, aplica cuantización al modelo ONNX)
 

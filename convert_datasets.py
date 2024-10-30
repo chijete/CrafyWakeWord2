@@ -122,10 +122,10 @@ for csvFilePath in archivos_csv:
         if maxCount_part_of_positive_clips_to_negative != False:
           if forIndex_wov < maxCount_part_of_positive_clips_to_negative:
 
-            if config_datos['first_part_of_positive_clips_to_negative']:
+            if config_datos['first_part_of_positive_clips_to_negative'] > 0:
 
               fpopctn_segment = segmento_cortado
-              fpopctn_segment = fpopctn_segment[0:round(total_time/2.5)]
+              fpopctn_segment = fpopctn_segment[0:round(total_time/100*config_datos['first_part_of_positive_clips_to_negative'])]
 
               # Add noise
               w_noise_total_time = random.randint(config_datos['min_audio_length'], config_datos['max_audio_length'])
@@ -145,10 +145,10 @@ for csvFilePath in archivos_csv:
                 'duration': len(fpopctn_segment)
               }])], ignore_index=True)
 
-            if config_datos['last_part_of_positive_clips_to_negative']:
+            if config_datos['last_part_of_positive_clips_to_negative'] > 0:
 
               lpopctn_segment = segmento_cortado
-              lpopctn_segment = lpopctn_segment[round(total_time/3*2):total_time]
+              lpopctn_segment = lpopctn_segment[round(total_time-total_time/100*config_datos['last_part_of_positive_clips_to_negative']):total_time]
 
               # Add noise
               w_noise_total_time = random.randint(config_datos['min_audio_length'], config_datos['max_audio_length'])

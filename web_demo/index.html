@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrafyWakeWord2</title>
+  <script src="ffmpeg_0.11.6.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.18/dist/bundle.min.js"></script>
+</head>
+<body>
+  <h1>CrafyWakeWord2</h1>
+  <p>Say "almeja"</p>
+  <p>
+    Demo from <a href="https://github.com/chijete/CrafyWakeWord2">https://github.com/chijete/CrafyWakeWord2</a>.<br>
+    You must grant access to your microphone to try this demo.<br>
+    Every time you say a word, the system will detect if it is the wake word (in this case "almeja") or not, and will print it in Logs.<br>
+    The longer you try this demo without reloading the page, the more RAM it will consume, until it causes a memory error.
+    This is a FFmpeg-wasm issue, not CrafyWakeWord2. One way to fix this is to reload the FFmpeg-wasm session every few
+    iterations, but we haven't added that to this page because it's just a demo.
+  </p>
+  <p><b>Logs:</b></p>
+  <p id="htmlConsole"></p>
+  <script src="main.js"></script>
+</body>
+</html>
